@@ -28,6 +28,12 @@
 
 - (void)testExample {
     XCTAssertTrue([(AppDelegate*)[[UIApplication sharedApplication] delegate] returnTrue]);
+    XCTestExpectation *expt = [self expectationWithDescription:@"expect"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [NSThread sleepForTimeInterval:10];
+        [expt fulfill];
+    });
+    [self waitForExpectationsWithTimeout:15 handler:nil];
 }
 
 - (void)testPerformanceExample {
